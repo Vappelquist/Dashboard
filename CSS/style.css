@@ -16,6 +16,22 @@ a {
 }
 body {
   background-color: var(--color-bg);
+  min-height: 100vh;
+  background-size: cover;
+  background-position:center;
+  transition: background-image 0.5s ease;
+  -webkit-transition: background-image 0.5s ease;
+  -moz-transition: background-image 0.5s ease;
+  -ms-transition: background-image 0.5s ease;
+  -o-transition: background-image 0.5s ease;
+display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.rbg {
+  cursor: pointer;
 }
 header {
   display: flex;
@@ -40,7 +56,6 @@ header {
 .clock p {
   margin: 0 1em 0 1em;
 }
-
 .boxContainer {
   display: flex;
   flex-direction: row;
@@ -72,7 +87,6 @@ header {
   justify-content: center;
   margin-top: 1em;
 }
-
 .notes {
   margin-top: 1em;
   width: 15vw;
@@ -93,5 +107,15 @@ header {
 footer {
   display: flex;
   justify-content: center;
-  bottom: 0;
+  
+}
+.linkAdd{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: none;
+  margin-top: 10px;
+  height: 2rem;
+  width: fit-content;
+  padding: 1rem 10px;
 }
