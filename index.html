@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./CSS/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./script.js" defer></script>
   </head>
   <body>
@@ -13,10 +14,6 @@
       <div class="clock">
         <p id="time"><strong></strong></p>
         <p id="date"><strong></strong></p>
-        <!-- <p class="time"><strong></strong></p>
-        <p class="date"> <strong></strong></p> -->
-      <!-- <div class="time" id="time"> </div> -->
-      <!-- <div class="date" id="time"></div> -->
       </div>
     </header>
     <main>
@@ -28,6 +25,10 @@
       <div class="boxContainer">
         <div class="box">
           <h2>Snabblänkar</h2>
+          <div class="linkAdd">  
+            <button> Lägg till länk</button>
+          </div>
+
         </div>
         <div class="box">
           <h2>Väder</h2>
@@ -45,7 +46,7 @@
     </main>
     <footer>
       <!-- Random bg -->
-       <h3>Slumpa ny bakgrund</h3>
+       <button class="rbg" onclick="bgchange()"><h3>Slumpa ny bakgrund</h3></button>
     </footer>
   </body>
 </html>
