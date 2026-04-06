@@ -24,12 +24,10 @@ body {
   -moz-transition: background-image 0.5s ease;
   -ms-transition: background-image 0.5s ease;
   -o-transition: background-image 0.5s ease;
-display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
-
 .rbg {
   cursor: pointer;
 }
@@ -43,8 +41,9 @@ header {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  background-color: #00ffff;
-  width: fit-content;
+  background: #e2e2e278;
+border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15);  width: fit-content;
   margin-top: 1em;
   padding: 5px 3.5em 5px 3.5em;
   border-radius: 50px;
@@ -60,25 +59,28 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 95vw;
+  margin: 0 2.5vw 0 2.5vw;
 }
 .name {
   display: flex;
   justify-content: center;
-  margin: 4em 0 2em 0;
+  margin: 2em 0 2em 0;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
 }
 .box {
-  width: 15vw;
-  min-height: 50vh;
+  width: 22vw;
+  min-height: 40vh;
   background: #e2e2e278;
-  margin: 0 5px;
+  margin: 0 8px;
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 35px rgba(0, 0, 0, 0.15);
   padding: 0.5em;
 }
@@ -87,16 +89,23 @@ header {
   justify-content: center;
   margin-top: 1em;
 }
+.links{
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
+  
+}
 .notes {
+  opacity: 0.8;
   margin-top: 1em;
-  width: 15vw;
-  height: 40vh;
+  width: 21vw;
+  height: 35vh;
   resize: none;
-  border-radius: 30px;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
 }
 .notes p {
   color: black;
@@ -109,13 +118,30 @@ footer {
   justify-content: center;
   
 }
-.linkAdd{
+
+.linkSetup{
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  background-color: none;
   margin-top: 10px;
   height: 2rem;
-  width: fit-content;
   padding: 1rem 10px;
+}
+.linkSetup button{
+  background-color: rgba(155, 155, 155, 0.29);
+  padding: 1em;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+  align-self: center;
+  font-size: small;
+
+}
+
+
+#linkDiv{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }

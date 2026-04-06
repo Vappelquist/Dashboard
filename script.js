@@ -40,3 +40,61 @@ document.body.style.backgroundImage = `url(${bg.urls.regular})`
     console.log("Något gick fel")
   }
 }
+
+
+const addBtn = document.getElementById("addLinkBtn");
+const linkDiv = document.getElementById("linkDiv");
+const linkAdd = document.getElementById("linkAdd");
+const submitBtn = document.getElementById("submitLink");
+
+
+addBtn.addEventListener("click", () => {
+  linkAdd.style.display = "none";
+  linkDiv.style.display = "flex";
+});
+submitBtn.addEventListener("click", () => {
+  let raw = document.getElementById("urlField").value.trim();
+  if (!raw) return;
+
+  if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
+
+  let hostname;
+  try {
+    hostname = new URL(raw).hostname;
+  } catch {
+    alert("Ogiltig URL");
+    return;
+  }
+
+  // Derive name from hostname
+  const name = hostname
+    .replace(/^www\./, "")
+    .split(".")[0]
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  // Build link element
+  const a = document.createElement("a");
+  a.href = raw;
+  a.target = "_blank";
+  a.className = "linkItem";
+  a.innerHTML = `
+    <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=64" width="20" height="20">
+    <span>${name}</span>
+    <button class="removeLink">×</button>
+  `;
+a.querySelector(".removeLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    a.remove();
+  });
+  document.getElementById("linkList").appendChild(a);
+
+  document.getElementById("urlField").value = "";
+  linkAdd.style.display = "flex";
+  linkDiv.style.display = "none";
+});
+
+
+
+ 
+

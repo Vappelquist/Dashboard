@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./CSS/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="./script.js" defer></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+/>    <script src="./script.js" defer></script>
   </head>
   <body>
     <header>
@@ -22,14 +24,21 @@
         <h1 contenteditable="true">John Doe Dashboard</h1>
       </div>
       <!-- boxes -->
-      <div class="boxContainer">
+      <div class="boxContainer" class="links">
         <div class="box">
-          <h2>Snabblänkar</h2>
-          <div class="linkAdd">  
-            <button> Lägg till länk</button>
-          </div>
-
-        </div>
+  <h2>Snabblänkar</h2>
+  <div id="linkList"></div>
+  <div id="linkAdd" class="linkSetup">
+    <button id="addLinkBtn">
+      <i class="fa-solid fa-circle-plus"></i> Lägg till länk
+    </button>
+  </div>
+  <div id="linkDiv">
+    <input type="text" id="urlField" placeholder="Ange URL och tryck enter" />
+    <button id="submitLink">Submit</button>
+  </div>
+</div>
+        <div id="linkList"></div>
         <div class="box">
           <h2>Väder</h2>
         </div>
