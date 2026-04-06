@@ -31,16 +31,62 @@ async function bgchange(){
   
   const res = await fetch(`${baseURL}${key}`)
   const bg  =await res.json()
-  console.log(bg);
+  // console.log(bg);
 document.body.style.backgroundImage = `url(${bg.urls.regular})`
-  console.log({baseURL},{key})
-  console.log(bg)
+  // console.log({baseURL},{key})
+  // console.log(bg)
 
   if (!res.ok){
     console.log("Något gick fel")
   }
 }
+// Weather API
+async function getWeather() {
+  const key = "54d18df177e450b5c1d17ec518c1c853";
+  const lat = 57.1061;
+  const lon = 12.2522;
+    const baseURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&lang=sv&appid=${key}`;
 
+  const res = await fetch(`${baseURL}`);
+  if (!res.ok) {
+    console.log("Något gick fel");
+    return;
+  }
+
+  const data = await res.json();
+  const days = [data.daily[0], data.daily[1], data.daily[2]];
+  const dayNames = ["Idag", "Imorgon", "Övermorgon"];
+  const weatherDiv = document.getElementById("weather");
+  weatherDiv.innerHTML = days.map((day, i) => {
+    const icon = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`;
+    const desc= day.weather[0].description;
+    const temp = Math.round(day.temp.day);
+    return `
+    <div class="weatherDay">
+    <img src="${icon}" alt="${desc}" title="${desc}" width="50" height="50">
+    <div class="weatherText">
+      <h2 class="dayName">${dayNames[i]}</h2>
+      <div class="weatherInfo">
+        <h3>${temp}°C</h3>
+        <h3>${desc.charAt(0).toUpperCase() + desc.slice(1)}</h3>
+      </div>
+    </div>
+      </div>
+    `;
+  }).join("");
+}
+getWeather();
+
+async function funFact() {
+  const res = await fetch("https://uselessfacts.jsph.pl/api/v2/facts/random?language=en");
+  if (!res.ok) {
+    console.log("Något gick fel");
+    return;
+  }
+  const data = await res.json();
+  document.getElementById("facts").textContent = data.text;
+}
+funFact();
 
 const addBtn = document.getElementById("addLinkBtn");
 const linkDiv = document.getElementById("linkDiv");
@@ -57,12 +103,16 @@ submitBtn.addEventListener("click", () => {
   if (!raw) return;
 
   if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
-
+  
   let hostname;
   try {
     hostname = new URL(raw).hostname;
   } catch {
     alert("Ogiltig URL");
+    return;
+  }
+  if (!hostname.includes(".")) {
+    alert("Ange en giltig URL, t.ex. google.com");
     return;
   }
 
@@ -79,12 +129,13 @@ submitBtn.addEventListener("click", () => {
   a.target = "_blank";
   a.className = "linkItem";
   a.innerHTML = `
-    <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=64" width="20" height="20">
-    <span>${name}</span>
+    <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=64" width="30px" height="30px">
+    <h2>${name}</h2>
     <button class="removeLink">×</button>
   `;
 a.querySelector(".removeLink").addEventListener("click", (e) => {
     e.preventDefault();
+    e.stopPropagation();
     a.remove();
   });
   document.getElementById("linkList").appendChild(a);
