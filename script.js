@@ -1,4 +1,4 @@
-bgchange();
+loadBG()
 function updateClock() {
   const now = new Date();
   document.getElementById("time").textContent = now.toLocaleTimeString(
@@ -25,6 +25,21 @@ updateDate();
 setInterval(updateClock, 6000);
 setInterval(updateDate, 1000);
 
+async function loadBG() {
+  const current = localStorage.getItem("CurrentBG");
+  if (!current) {
+    bgchange(); // no saved BG yet, just fetch a new one
+    return;
+  }
+  
+const key = "KcKYMJ7HVXlAZ-FUNTklxu4IZk5iwjJOua0-PRxqJKE";
+  const baseLink = `https://api.unsplash.com/photos/${current}?client_id=${key}`;
+
+  const res = await fetch(baseLink);
+  const data = await res.json();
+
+  document.body.style.backgroundImage = `url(${data.urls.regular})`;
+}
 async function bgchange(){
 
   const baseURL = "https://api.unsplash.com/photos/random?client_id="
@@ -34,8 +49,11 @@ async function bgchange(){
   const bg  =await res.json()
   // console.log(bg);
 document.body.style.backgroundImage = `url(${bg.urls.regular})`
-  // console.log({baseURL},{key})
-  // console.log(bg)
+  console.log({baseURL},{key})
+  console.log(bg)
+  console.log(bg.id)
+
+  localStorage.setItem("CurrentBG", bg.id)
 
   if (!res.ok){
     console.log("Något gick fel")
@@ -88,22 +106,54 @@ async function funFact() {
   document.getElementById("facts").textContent = data.text;
 }
 funFact();
+const titleName = document.getElementById("name");
+loadTitleName();
+
+titleName.addEventListener("input", () => {
+  console.log(titleName)
+  localStorage.setItem("Name", titleName.innerText)
+})
+
+function loadTitleName() {
+  const saved = localStorage.getItem("Name");
+  titleName.innerText = saved
+}
+
+const notes = document.getElementById("notes")
+loadNotes()
+
+notes.addEventListener("input", ()=>{
+  console.log(notes.value)
+  localStorage.setItem("Notes", notes.value)
+})
+function loadNotes (){
+  let notesLS = localStorage.getItem("Notes");
+  notes.value = notesLS;
+}
 
 const addBtn = document.getElementById("addLinkBtn");
 const linkDiv = document.getElementById("linkDiv");
 const linkAdd = document.getElementById("linkAdd");
 const submitBtn = document.getElementById("submitLink");
 
+  let links = loadLinks();
+
 
 addBtn.addEventListener("click", () => {
   linkAdd.style.display = "none";
   linkDiv.style.display = "flex";
 });
-submitBtn.addEventListener("click", () => {
+submitBtn.addEventListener("click", () => 
+  {
   let raw = document.getElementById("urlField").value.trim();
-  if (!raw) return;
-
-  if (!/^https?:\/\//i.test(raw)) raw = "https://" + raw;
+  if (!raw) 
+    {
+    return;
+    }
+  if (!/^https?:\/\//i.test(raw)) 
+    {
+    raw = "https://" + raw;
+  }
   
   let hostname;
   try {
@@ -124,27 +174,54 @@ submitBtn.addEventListener("click", () => {
     .replace(/-/g, " ")
     .replace(/\b\w/g, c => c.toUpperCase());
 
-  // Build link element
-  const a = document.createElement("a");
-  a.href = raw;
-  a.target = "_blank";
-  a.className = "linkItem";
-  a.innerHTML = `
-    <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=64" width="30px" height="30px">
-    <h2>${name}</h2>
-    <button class="removeLink">×</button>
-  `;
-a.querySelector(".removeLink").addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    a.remove();
-  });
-  document.getElementById("linkList").appendChild(a);
+    links.push({url: raw, name, hostname})
+  saveLinks(links)
 
+  buildLinkElement({url: raw, name, hostname});
+  
   document.getElementById("urlField").value = "";
   linkAdd.style.display = "flex";
   linkDiv.style.display = "none";
 });
+
+function buildLinkElement({url, name, hostname}) {
+
+  // Build link element
+  const a = document.createElement("a");
+  a.href = url;
+  a.target = "_blank";
+  a.className = "linkItem";
+  a.innerHTML = `
+  <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=64" width="30px" height="30px">
+  <h2>${name}</h2>
+  <button class="removeLink">×</button>
+  `;
+  a.querySelector(".removeLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    links = links.filter(l => l.url !== url);
+    saveLinks(links)
+    a.remove();
+  });
+  document.getElementById("linkList").appendChild(a);
+}
+
+  
+
+function loadLinks() {
+  return JSON.parse(localStorage.getItem("links")) || [];
+}
+
+function saveLinks (links){
+  localStorage.setItem("links", JSON.stringify(links))
+}
+  links.forEach(link => buildLinkElement(link));
+
+
+  console.log(links)
+  
+  
+  
+
 
 
 

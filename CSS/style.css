@@ -68,6 +68,7 @@ border: 1px solid rgba(255, 255, 255, 0.5);
   margin: 2em 0 2em 0;
   font-family: Arial, Helvetica, sans-serif;
   font-size: larger;
+  min-width: 1rem;
 }
 .box {
   width: 22vw;
@@ -170,7 +171,7 @@ width: fit-content;
 .linkItem{
   display: flex;
     position: relative; 
-
+  align-items: center;
   width: max-content;
   background-color: white;
   width: 22vw;
@@ -192,12 +193,13 @@ width: fit-content;
 .linkItem h2{
   display: flex;
   align-self: center;
-  margin-top: 0;
+justify-content: center;  
 }
 .linkItem button{
   display: flex;
   position: absolute;
   right: 0.5em;
+  margin-top: 0;
   justify-self: end;
   background-color: transparent;
   font-size: larger;
