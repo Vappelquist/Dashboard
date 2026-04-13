@@ -28,7 +28,7 @@ setInterval(updateDate, 1000);
 async function loadBG() {
   const current = localStorage.getItem("CurrentBG");
   if (!current) {
-    bgchange(); // no saved BG yet, just fetch a new one
+    bgchange(); 
     return;
   }
   
