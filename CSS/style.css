@@ -158,7 +158,7 @@ width: fit-content;
 
 
 #linkDiv{
-  display: flex;
+  display: none;
   justify-content: center;
   flex-direction: row;
 }
