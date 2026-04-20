@@ -82,7 +82,7 @@ async function getWeather() {
     const temp = Math.round(day.temp.day);
     return `
     <div class="weatherDay">
-    <img src="${icon}" alt="${desc}" title="${desc}" width="50" height="50">
+    <img class = "weatherImg" src="${icon}" alt="${desc}" title="${desc}" width="50" height="50">
     <div class="weatherText">
       <h2 class="dayName">${dayNames[i]}</h2>
       <div class="weatherInfo">
