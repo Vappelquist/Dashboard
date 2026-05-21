@@ -98,7 +98,7 @@ border: 1px solid rgba(255, 255, 255, 0.5);
   
 }
 .notes {
-  /* padding: 1em; */
+  padding: 1em;
   display: flex;
   justify-self: center;
   opacity: 0.8;

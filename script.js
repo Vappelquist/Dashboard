@@ -22,7 +22,7 @@ function updateDate() {
 }
 updateClock();
 updateDate();
-setInterval(updateClock, 6000);
+setInterval(updateClock, 1000);
 setInterval(updateDate, 1000);
 
 async function loadBG() {
@@ -61,9 +61,19 @@ document.body.style.backgroundImage = `url(${bg.urls.regular})`
 }
 // Weather API
 async function getWeather() {
+  const position = await new Promise ((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      resolve, 
+    (err) => {
+      console.log("Kunde inte hämta position, visar väder för Stockholm");
+      resolve({coords: {latitude: 59.3293, longitude: 18.0686}});
+    }
+    );
+  });
+  
   const key = "54d18df177e450b5c1d17ec518c1c853";
-  const lat = 57.1061;
-  const lon = 12.2522;
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
     const baseURL = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&lang=sv&appid=${key}`;
 
   const res = await fetch(`${baseURL}`);
@@ -116,7 +126,12 @@ titleName.addEventListener("input", () => {
 
 function loadTitleName() {
   const saved = localStorage.getItem("Name");
+  if (!saved) {
+    titleName.innerText = "John Doe Dashboard";
+  }
+  else {
   titleName.innerText = saved
+}
 }
 
 const notes = document.getElementById("notes")
